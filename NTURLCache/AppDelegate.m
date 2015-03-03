@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "AFNetworkReachabilityManager.h"
+#import "NTURLCache.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachesDir = [paths objectAtIndex:0];
+    NSLog(@"%@/com.cardechnology.NTURLCache/Cache.db", cachesDir);
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    
+    NSURLCache *sharedCache = [[NTURLCache alloc] initWithMemoryCapacity:0
+                                                               diskCapacity:50 * 1024 * 1024
+                                                                   diskPath:nil];
+    assert(sharedCache);
+    [NSURLCache setSharedURLCache:sharedCache];
+    
     return YES;
 }
 

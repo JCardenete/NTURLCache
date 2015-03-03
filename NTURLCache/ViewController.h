@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 
+@property(nonatomic,strong) IBOutlet UILabel *labelResult;
+
+- (IBAction)request;
 
 @end
 
